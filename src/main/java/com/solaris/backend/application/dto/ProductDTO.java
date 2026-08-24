@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 public record ProductDTO( Long id,
                           LocalDateTime createdAt,
                           LocalDateTime updatedAt,
-                          Long createdId,
-                          Long updatedId,
+                          String createdId,
+                          String updatedId,
 
                          @NotBlank(message = "Nome é obrigatório")
                          @Schema(description = "Nome do produto", example = "Notebook")
@@ -29,6 +29,5 @@ public record ProductDTO( Long id,
                          @NotNull(message = "Status é obrigatório")
                          Boolean active,
 
-                         @NotBlank(message = "Imagem é obrigatória")
                          String image) {
 }

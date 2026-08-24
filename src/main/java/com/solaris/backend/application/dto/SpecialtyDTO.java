@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public record SpecialtyDTO(Long id,
                            LocalDateTime createdAt,
                            LocalDateTime updatedAt,
-                           Long createdId,
-                           Long updatedId,
+                           String createdId,
+                           String updatedId,
                            String name) {
 }

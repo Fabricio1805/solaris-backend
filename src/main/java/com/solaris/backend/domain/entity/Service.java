@@ -1,9 +1,6 @@
 package com.solaris.backend.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -19,9 +16,14 @@ import java.math.BigDecimal;
 public class Service extends BaseEntity {
     private String name;
     private String description;
+
+    @Column(precision = 19, scale = 2, nullable = false)
     private BigDecimal price;
+
     private String photo;
+
     private Boolean active;
+
     private Integer duration;
 
     @ManyToOne

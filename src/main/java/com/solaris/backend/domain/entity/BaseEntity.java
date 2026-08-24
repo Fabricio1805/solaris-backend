@@ -32,8 +32,9 @@ public abstract class BaseEntity {
     private LocalDateTime updatedAt;
 
     @CreatedBy
-    private Long createdId;
+    @Column(updatable = false)
+    private String createdId;
 
     @LastModifiedBy
-    private Long updatedId;
+    private String updatedId;
 }

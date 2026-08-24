@@ -1,22 +1,53 @@
 spring:
     application:
       name: solaris-backend
-
     profiles:
-      active: test
+      active: local
 
     jpa:
       open-in-view: false
       hibernate:
-        ddl-auto: create #validate
+        ddl-auto: update #create #validate
       show-sql: false
       properties:
         hibernate:
-          format_sql: true
+          format_sql: false
 
     flyway:
-      enabled: true
+      enabled: false
       locations: classpath:db/migration
+
+    security:
+      oauth2:
+        resourceserver:
+          jwt:
+            issuer-uri: http://localhost:8082/realms/pitang-booster
+            jwk-set-uri: http://keycloak:8080/realms/pitang-booster/protocol/openid-connect/certs
+jwt:
+  auth:
+    converter:
+      resource-id: pitang-booster
+      principle-attribute: preferred_username
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus,metrics,logfile
+
+  endpoint:
+    health:
+      show-details: always
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+  metrics:
+    tags:
+      application:
+        prometheus-grafana
 
 springdoc:
     api-docs:

@@ -6,8 +6,8 @@ public record ProductCategoryDTO(
         Long id,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
-        Long createdId,
-        Long updatedId,
+        String createdId,
+        String updatedId,
         String name
 ){
 }
