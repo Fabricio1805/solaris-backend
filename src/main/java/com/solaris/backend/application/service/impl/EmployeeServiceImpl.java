@@ -1,5 +1,6 @@
 package com.solaris.backend.application.service.impl;
 
+import com.solaris.backend.application.dto.CompanyDTO;
 import com.solaris.backend.application.dto.EmployeeDTO;
 import com.solaris.backend.application.exception.NotFoundException;
 import com.solaris.backend.application.mapper.EmployeeMapper;
@@ -10,6 +11,8 @@ import com.solaris.backend.domain.entity.Employee;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,8 +73,14 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return
      */
     @Override
-    public List<EmployeeDTO> findAll() {
-        return employeeMapper.toDTOList(employeeRepository.findAll());
+    public Page<EmployeeDTO> findAll(Pageable pageable) {
+        logger.info("Listando todos os Funcionarios.");
+
+        Page<Employee> employees = employeeRepository.findAll(pageable);
+
+        logger.info("Total de Funcionarios encontrados: {}", employees.getSize());
+
+        return employeeMapper.toDTOList(employees);
     }
 
     /**

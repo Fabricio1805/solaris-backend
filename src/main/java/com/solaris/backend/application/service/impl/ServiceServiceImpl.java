@@ -9,6 +9,8 @@ import com.solaris.backend.domain.entity.Service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -81,12 +83,12 @@ public class ServiceServiceImpl implements ServiceService {
      * @return
      */
     @Override
-    public List<ServiceDTO> findAll() {
+    public Page<ServiceDTO> findAll(Pageable pageable) {
         logger.info("Listando todos os serviços.");
 
-        List<Service> addresses = serviceRepository.findAll();
+        Page<Service> addresses = serviceRepository.findAll(pageable);
 
-        logger.info("Total de serviços encontrados: {}", addresses.size());
+        logger.info("Total de serviços encontrados: {}", addresses.getSize());
 
         return serviceMapper.toDTOList(addresses);
     }

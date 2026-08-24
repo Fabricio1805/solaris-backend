@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,11 +57,11 @@ public class PaymentController {
 
     @Operation(summary = "Listar todos os pagamentos")
     @GetMapping
-    public ResponseEntity<List<PaymentDTO>> findAll() {
+    public ResponseEntity<Page<PaymentDTO>> findAll(Pageable pageable) {
 
         logger.info("Listando todos os pagamentos");
 
-        List<PaymentDTO> response = paymentService.findAll();
+        Page<PaymentDTO> response = paymentService.findAll(pageable);
         return ResponseEntity.ok(response);
     }
 

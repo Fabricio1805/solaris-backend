@@ -5,10 +5,13 @@ import com.solaris.backend.application.exception.NotFoundException;
 import com.solaris.backend.application.mapper.ClientMapper;
 import com.solaris.backend.application.repository.ClientRepository;
 import com.solaris.backend.application.service.ClientService;
+import com.solaris.backend.domain.entity.Address;
 import com.solaris.backend.domain.entity.Client;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,8 +71,14 @@ public class ClientServiceImpl implements ClientService {
      * @return
      */
     @Override
-    public List<ClientDTO> findAll() {
-        return clientMapper.toDTOList(clientRepository.findAll());
+    public Page<ClientDTO> findAll(Pageable pageable) {
+        logger.info("Listando todos os Clientes.");
+
+        Page<Client> clients = clientRepository.findAll(pageable);
+
+        logger.info("Total de Clientes encontrados: {}", clients.getSize());
+
+        return clientMapper.toDTOList(clients);
     }
 
     /**

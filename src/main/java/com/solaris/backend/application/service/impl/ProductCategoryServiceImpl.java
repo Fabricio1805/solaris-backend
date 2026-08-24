@@ -11,6 +11,8 @@ import com.solaris.backend.domain.entity.ProductCategory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -83,12 +85,12 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      * @return
      */
     @Override
-    public List<ProductCategoryDTO> findAll() {
+    public Page<ProductCategoryDTO> findAll(Pageable pageable) {
         logger.info("Listando todos os Produto categorias.");
 
-        List<ProductCategory> addresses = productCategoryRepository.findAll();
+        Page<ProductCategory> addresses = productCategoryRepository.findAll(pageable);
 
-        logger.info("Total de Produto categorias encontrados: {}", addresses.size());
+        logger.info("Total de Produto categorias encontrados: {}", addresses.getSize());
 
         return productCategoryMapper.toDTOList(addresses);
     }

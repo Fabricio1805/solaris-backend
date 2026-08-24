@@ -1,14 +1,18 @@
 package com.solaris.backend.application.service.impl;
 
+import com.solaris.backend.application.dto.CompanyDTO;
 import com.solaris.backend.application.dto.PaymentDTO;
 import com.solaris.backend.application.exception.NotFoundException;
 import com.solaris.backend.application.mapper.PaymentMapper;
 import com.solaris.backend.application.repository.PaymentRepository;
 import com.solaris.backend.application.service.PaymentService;
+import com.solaris.backend.domain.entity.Company;
 import com.solaris.backend.domain.entity.Payment;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,12 +84,12 @@ public class PaymentServiceImpl implements PaymentService {
      * @return
      */
     @Override
-    public List<PaymentDTO> findAll() {
+    public Page<PaymentDTO> findAll(Pageable pageable) {
         logger.info("Listando todos os endereços.");
 
-        List<Payment> addresses = paymentRepository.findAll();
+        Page<Payment> addresses = paymentRepository.findAll(pageable);
 
-        logger.info("Total de endereços encontrados: {}", addresses.size());
+        logger.info("Total de endereços encontrados: {}", addresses.getSize());
 
         return paymentMapper.toDTOList(addresses);
     }

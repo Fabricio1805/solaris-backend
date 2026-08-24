@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,11 +56,11 @@ public class CompanyController {
 
     @Operation(summary = "Listar todos os empresas")
     @GetMapping
-    public ResponseEntity<List<CompanyDTO>> findAll() {
+    public ResponseEntity<Page<CompanyDTO>> findAll(Pageable pageable) {
 
         logger.info("Listando todos os empresas");
 
-        List<CompanyDTO> response = companyService.findAll();
+        Page<CompanyDTO> response = companyService.findAll(pageable);
         return ResponseEntity.ok(response);
     }
 

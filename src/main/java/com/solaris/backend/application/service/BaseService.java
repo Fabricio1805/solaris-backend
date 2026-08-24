@@ -1,5 +1,8 @@
 package com.solaris.backend.application.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface BaseService<D, E ,ID> {
@@ -26,7 +29,7 @@ public interface BaseService<D, E ,ID> {
     /**
      * @return
      */
-    List<D> findAll();
+    Page<D> findAll(Pageable pageable);
 
     /**
      * @param id

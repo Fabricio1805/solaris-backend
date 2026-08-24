@@ -1,5 +1,6 @@
 package com.solaris.backend.application.service.impl;
 
+import com.solaris.backend.application.dto.ClientDTO;
 import com.solaris.backend.application.dto.CompanyDTO;
 import com.solaris.backend.application.exception.NotFoundException;
 import com.solaris.backend.application.mapper.CompanyMapper;
@@ -10,6 +11,8 @@ import com.solaris.backend.domain.entity.Company;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,8 +73,14 @@ public class CompanyServiceImpl implements CompanyService {
      * @return
      */
     @Override
-    public List<CompanyDTO> findAll() {
-        return companyMapper.toDTOList(companyRepository.findAll());
+    public Page<CompanyDTO> findAll(Pageable pageable) {
+        logger.info("Listando todos os Empresas.");
+
+        Page<Company> companies = companyRepository.findAll(pageable);
+
+        logger.info("Total de Empresas encontrados: {}", companies.getSize());
+
+        return companyMapper.toDTOList(companies);
     }
 
     /**

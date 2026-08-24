@@ -10,6 +10,8 @@ import com.solaris.backend.domain.entity.WorkingHours;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,12 +84,12 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
      * @return
      */
     @Override
-    public List<WorkingHoursDTO> findAll() {
+    public Page<WorkingHoursDTO> findAll(Pageable pageable) {
         logger.info("Listando todos os horas de trabalho.");
 
-        List<WorkingHours> addresses = workingHoursRepository.findAll();
+        Page<WorkingHours> addresses = workingHoursRepository.findAll(pageable);
 
-        logger.info("Total de horas de trabalho encontrados: {}", addresses.size());
+        logger.info("Total de horas de trabalho encontrados: {}", addresses.getSize());
 
         return workingHoursMapper.toDTOList(addresses);
     }

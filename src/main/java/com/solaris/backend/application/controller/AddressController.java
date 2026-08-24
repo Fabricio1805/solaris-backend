@@ -5,12 +5,16 @@ import com.solaris.backend.application.dto.ProductDTO;
 import com.solaris.backend.application.service.AddressService;
 import com.solaris.backend.application.service.impl.AddressServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +31,7 @@ public class AddressController {
 
     @Operation(summary = "Cadastrar endereço")
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<AddressDTO> save(@RequestBody @Valid AddressDTO dto) {
         logger.info("Cadastrando endereço");
         AddressDTO response = addressService.save(dto);
@@ -35,6 +40,7 @@ public class AddressController {
 
     @Operation(summary = "Atualizar endereço")
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<AddressDTO> update(
             @PathVariable Long id,
             @RequestBody @Valid AddressDTO dto) {
@@ -47,6 +53,7 @@ public class AddressController {
 
     @Operation(summary = "Buscar endereço por ID")
     @GetMapping("/{id}")
+    @RolesAllowed({"ADMIN", "USER"})
     public ResponseEntity<AddressDTO> findById(@PathVariable Long id) {
 
         logger.info("Buscando endereço de id {}", id);
@@ -57,11 +64,11 @@ public class AddressController {
 
     @Operation(summary = "Listar todos os endereços")
     @GetMapping
-    public ResponseEntity<List<AddressDTO>> findAll() {
+    public ResponseEntity<Page<AddressDTO>> findAll(Pageable pageable) {
 
         logger.info("Listando todos os endereços");
 
-        List<AddressDTO> response = addressService.findAll();
+        Page<AddressDTO> response = addressService.findAll(pageable);
         return ResponseEntity.ok(response);
     }
 

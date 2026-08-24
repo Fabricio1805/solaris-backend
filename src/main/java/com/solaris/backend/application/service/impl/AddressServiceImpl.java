@@ -9,6 +9,8 @@ import com.solaris.backend.domain.entity.Address;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,12 +83,12 @@ public class AddressServiceImpl implements AddressService {
      * @return
      */
     @Override
-    public List<AddressDTO> findAll() {
+    public Page<AddressDTO> findAll(Pageable pageable) {
         logger.info("Listando todos os endereços.");
 
-        List<Address> addresses = addressRepository.findAll();
+        Page<Address> addresses = addressRepository.findAll(pageable);
 
-        logger.info("Total de endereços encontrados: {}", addresses.size());
+        logger.info("Total de endere�os encontrados: {}", addresses.getSize());
 
         return addressMapper.toDTOList(addresses);
     }

@@ -11,6 +11,8 @@ import com.solaris.backend.domain.entity.Specialty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,12 +84,12 @@ public class SpecialtyServiceImpl implements SpecialtyService {
      * @return
      */
     @Override
-    public List<SpecialtyDTO> findAll() {
+    public Page<SpecialtyDTO> findAll(Pageable pageable) {
         logger.info("Listando todos os especialidades.");
 
-        List<Specialty> addresses = specialtyRepository.findAll();
+        Page<Specialty> addresses = specialtyRepository.findAll(pageable);
 
-        logger.info("Total de especialidades encontrados: {}", addresses.size());
+        logger.info("Total de especialidades encontrados: {}", addresses.getSize());
 
         return specialtyMapper.toDTOList(addresses);
     }

@@ -9,6 +9,8 @@ import com.solaris.backend.domain.entity.Product;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,14 +83,14 @@ public class ProductServiceImpl implements ProductService {
      * @return
      */
     @Override
-    public List<ProductDTO> findAll() {
+    public Page<ProductDTO> findAll(Pageable pageable) {
         logger.info("Listando todos os produtos.");
 
-        List<Product> addresses = productRepository.findAll();
+        Page<Product> products = productRepository.findAll(pageable);
 
-        logger.info("Total de produtos encontrados: {}", addresses.size());
+        logger.info("Total de produtos encontrados: {}", products.getTotalElements());
 
-        return productMapper.toDTOList(addresses);
+        return productMapper.toDTOList(products);
     }
 
     /**

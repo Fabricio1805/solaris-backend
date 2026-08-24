@@ -12,6 +12,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -93,19 +97,25 @@ class AddressServiceImplTest {
     @Test
     void findAll() {
 
+        Pageable pageable = PageRequest.of(0, 10);
+
         List<Address> addresses = List.of(address);
-        List<AddressDTO> dtos = List.of(addressDTO);
+        Page<Address> addressPage = new PageImpl<>(addresses);
 
-        when(addressRepository.findAll()).thenReturn(addresses);
-        when(addressMapper.toDTOList(addresses)).thenReturn(dtos);
+        when(addressRepository.findAll(pageable))
+                .thenReturn(addressPage);
 
-        List<AddressDTO> result = addressService.findAll();
+        when(addressMapper.toDTO(address))
+                .thenReturn(addressDTO);
+
+        Page<AddressDTO> result = addressService.findAll(pageable);
 
         assertNotNull(result);
-        assertEquals(1, result.size());
+        assertEquals(1, result.getContent().size());
+        assertEquals(1, result.getTotalElements());
 
-        verify(addressRepository).findAll();
-        verify(addressMapper).toDTOList(addresses);
+        verify(addressRepository).findAll(pageable);
+        verify(addressMapper).toDTO(address);
     }
 
     @Test

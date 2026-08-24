@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -103,12 +105,13 @@ class AddressServiceIntegrationTest {
 
     @Test
     void shouldFindAllAddresses() {
+        Pageable pageable = PageRequest.of(0, 10);
 
         addressService.save(dto);
 
         addressService.save(dto);
 
-        assertTrue(addressService.findAll().size() >= 2);
+        assertTrue(addressService.findAll(pageable).getSize() >= 2);
     }
 
     @Test

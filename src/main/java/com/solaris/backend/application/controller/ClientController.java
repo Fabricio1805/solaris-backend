@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,11 +56,11 @@ public class ClientController {
 
     @Operation(summary = "Listar todos os clientes")
     @GetMapping
-    public ResponseEntity<List<ClientDTO>> findAll() {
+    public ResponseEntity<Page<ClientDTO>> findAll(Pageable pageable) {
 
         logger.info("Listando todos os clientes");
 
-        List<ClientDTO> response = clientService.findAll();
+        Page<ClientDTO> response = clientService.findAll(pageable);
         return ResponseEntity.ok(response);
     }
 
