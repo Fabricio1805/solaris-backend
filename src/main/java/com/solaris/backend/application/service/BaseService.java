@@ -29,7 +29,7 @@ public interface BaseService<D, E ,ID> {
     /**
      * @return
      */
-    Page<D> findAll(Pageable pageable);
+    Page<D> findAll(String name, Pageable pageable);
 
     /**
      * @param id

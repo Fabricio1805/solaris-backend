@@ -73,10 +73,19 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return
      */
     @Override
-    public Page<EmployeeDTO> findAll(Pageable pageable) {
+    public Page<EmployeeDTO> findAll(String name,Pageable pageable) {
         logger.info("Listando todos os Funcionarios.");
 
-        Page<Employee> employees = employeeRepository.findAll(pageable);
+        Page<Employee> employees;
+
+        if (name == null || name.isBlank()) {
+            employees = employeeRepository.findAll(pageable);
+        } else {
+            employees = employeeRepository.findByNameContainingIgnoreCase(
+                    name,
+                    pageable
+            );
+        }
 
         logger.info("Total de Funcionarios encontrados: {}", employees.getSize());
 

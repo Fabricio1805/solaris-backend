@@ -57,11 +57,11 @@ public class SpecialtyController {
 
     @Operation(summary = "Listar todos os especialidades")
     @GetMapping
-    public ResponseEntity<Page<SpecialtyDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<SpecialtyDTO>> findAll(@RequestParam(required = false) String name, Pageable pageable) {
 
         logger.info("Listando todos os especialidades");
 
-        Page<SpecialtyDTO> response = specialtyService.findAll(pageable);
+        Page<SpecialtyDTO> response = specialtyService.findAll(name, pageable);
         return ResponseEntity.ok(response);
     }
 

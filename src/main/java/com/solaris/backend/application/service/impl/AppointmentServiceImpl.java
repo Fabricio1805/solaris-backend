@@ -75,7 +75,7 @@ public class AppointmentServiceImpl implements AppointmentService {
      * @return
      */
     @Override
-    public Page<AppointmentDTO> findAll(Pageable pageable) {
+    public Page<AppointmentDTO> findAll(String name, Pageable pageable) {
         logger.info("Listando todos os Agendamentos.");
 
         Page<Appointment> appointments = appointmentRepository.findAll(pageable);

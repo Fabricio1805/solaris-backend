@@ -56,11 +56,11 @@ public class ProductController {
 
     @Operation(summary = "Listar todos os produtos")
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(required = false) String name, Pageable pageable) {
 
         logger.info("Listando todos os produtos");
 
-        Page<ProductDTO> response = productService.findAll(pageable);
+        Page<ProductDTO> response = productService.findAll(name, pageable);
         return ResponseEntity.ok(response);
     }
 

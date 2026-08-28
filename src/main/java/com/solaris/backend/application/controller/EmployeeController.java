@@ -57,11 +57,11 @@ public class EmployeeController {
 
     @Operation(summary = "Listar todos os empregados")
     @GetMapping
-    public ResponseEntity<Page<EmployeeDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<EmployeeDTO>> findAll(@RequestParam(required = false) String name,  Pageable pageable) {
 
         logger.info("Listando todos os empregados");
 
-        Page<EmployeeDTO> response = employeeService.findAll(pageable);
+        Page<EmployeeDTO> response = employeeService.findAll(name,pageable);
         return ResponseEntity.ok(response);
     }
 

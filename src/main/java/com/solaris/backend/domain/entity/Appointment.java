@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Table(name = "appointment")
 @Entity(name = "appointment")
@@ -38,6 +39,8 @@ public class Appointment extends BaseEntity {
     private LocalDateTime startTime;
 
     private LocalDateTime endTime;
+
+    private Date date;
 
     private BigDecimal price;
 

@@ -84,14 +84,14 @@ public class PaymentServiceImpl implements PaymentService {
      * @return
      */
     @Override
-    public Page<PaymentDTO> findAll(Pageable pageable) {
+    public Page<PaymentDTO> findAll(String name,Pageable pageable) {
         logger.info("Listando todos os endereços.");
 
-        Page<Payment> addresses = paymentRepository.findAll(pageable);
+        Page<Payment> payments = paymentRepository.findAll(pageable);
 
-        logger.info("Total de endereços encontrados: {}", addresses.getSize());
+        logger.info("Total de endereços encontrados: {}", payments.getSize());
 
-        return paymentMapper.toDTOList(addresses);
+        return paymentMapper.toDTOList(payments);
     }
 
     /**

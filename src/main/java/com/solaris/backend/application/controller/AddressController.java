@@ -64,11 +64,11 @@ public class AddressController {
 
     @Operation(summary = "Listar todos os endereços")
     @GetMapping
-    public ResponseEntity<Page<AddressDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<AddressDTO>> findAll(@RequestParam(required = false) String name, Pageable pageable) {
 
         logger.info("Listando todos os endereços");
 
-        Page<AddressDTO> response = addressService.findAll(pageable);
+        Page<AddressDTO> response = addressService.findAll(name, pageable);
         return ResponseEntity.ok(response);
     }
 

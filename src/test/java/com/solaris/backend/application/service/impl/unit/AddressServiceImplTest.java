@@ -108,7 +108,7 @@ class AddressServiceImplTest {
         when(addressMapper.toDTO(address))
                 .thenReturn(addressDTO);
 
-        Page<AddressDTO> result = addressService.findAll(pageable);
+        Page<AddressDTO> result = addressService.findAll("", pageable);
 
         assertNotNull(result);
         assertEquals(1, result.getContent().size());

@@ -84,14 +84,23 @@ public class SpecialtyServiceImpl implements SpecialtyService {
      * @return
      */
     @Override
-    public Page<SpecialtyDTO> findAll(Pageable pageable) {
+    public Page<SpecialtyDTO> findAll(String name,Pageable pageable) {
         logger.info("Listando todos os especialidades.");
 
-        Page<Specialty> addresses = specialtyRepository.findAll(pageable);
+        Page<Specialty> specialties;
 
-        logger.info("Total de especialidades encontrados: {}", addresses.getSize());
+        if (name == null || name.isBlank()) {
+            specialties = specialtyRepository.findAll(pageable);
+        } else {
+            specialties = specialtyRepository.findByNameContainingIgnoreCase(
+                    name,
+                    pageable
+            );
+        }
 
-        return specialtyMapper.toDTOList(addresses);
+        logger.info("Total de especialidades encontrados: {}", specialties.getSize());
+
+        return specialtyMapper.toDTOList(specialties);
     }
 
     /**

@@ -56,11 +56,11 @@ public class ClientController {
 
     @Operation(summary = "Listar todos os clientes")
     @GetMapping
-    public ResponseEntity<Page<ClientDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<ClientDTO>> findAll(@RequestParam(required = false) String name, Pageable pageable) {
 
         logger.info("Listando todos os clientes");
 
-        Page<ClientDTO> response = clientService.findAll(pageable);
+        Page<ClientDTO> response = clientService.findAll(name, pageable);
         return ResponseEntity.ok(response);
     }
 

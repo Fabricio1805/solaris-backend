@@ -83,10 +83,19 @@ public class ProductServiceImpl implements ProductService {
      * @return
      */
     @Override
-    public Page<ProductDTO> findAll(Pageable pageable) {
+    public Page<ProductDTO> findAll(String name, Pageable pageable) {
         logger.info("Listando todos os produtos.");
 
-        Page<Product> products = productRepository.findAll(pageable);
+        Page<Product> products;
+
+        if (name == null || name.isBlank()) {
+            products = productRepository.findAll(pageable);
+        } else {
+            products = productRepository.findByNameContainingIgnoreCase(
+                    name,
+                    pageable
+            );
+        }
 
         logger.info("Total de produtos encontrados: {}", products.getTotalElements());
 

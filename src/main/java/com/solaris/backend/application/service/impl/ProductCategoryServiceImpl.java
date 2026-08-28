@@ -85,14 +85,22 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
      * @return
      */
     @Override
-    public Page<ProductCategoryDTO> findAll(Pageable pageable) {
+    public Page<ProductCategoryDTO> findAll(String name, Pageable pageable) {
         logger.info("Listando todos os Produto categorias.");
 
-        Page<ProductCategory> addresses = productCategoryRepository.findAll(pageable);
+        Page<ProductCategory> productCategories;
 
-        logger.info("Total de Produto categorias encontrados: {}", addresses.getSize());
+        if (name == null || name.isBlank()) {
+            productCategories = productCategoryRepository.findAll(pageable);
+        } else {
+            productCategories = productCategoryRepository.findByNameContainingIgnoreCase(
+                    name,
+                    pageable
+            );
+        }
+        logger.info("Total de Produto categorias encontrados: {}", productCategories.getSize());
 
-        return productCategoryMapper.toDTOList(addresses);
+        return productCategoryMapper.toDTOList(productCategories);
     }
 
     /**

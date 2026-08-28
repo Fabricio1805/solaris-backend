@@ -33,6 +33,7 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:22.0.1
     container_name: keycloak-pitang-booster
+    restart: always
     ports:
       - "8082:8080"
     command: start-dev

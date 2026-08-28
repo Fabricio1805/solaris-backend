@@ -71,10 +71,19 @@ public class ClientServiceImpl implements ClientService {
      * @return
      */
     @Override
-    public Page<ClientDTO> findAll(Pageable pageable) {
+    public Page<ClientDTO> findAll(String name, Pageable pageable) {
         logger.info("Listando todos os Clientes.");
 
-        Page<Client> clients = clientRepository.findAll(pageable);
+        Page<Client> clients;
+
+        if (name == null || name.isBlank()) {
+            clients = clientRepository.findAll(pageable);
+        } else {
+            clients = clientRepository.findByNameContainingIgnoreCase(
+                    name,
+                    pageable
+            );
+        }
 
         logger.info("Total de Clientes encontrados: {}", clients.getSize());
 

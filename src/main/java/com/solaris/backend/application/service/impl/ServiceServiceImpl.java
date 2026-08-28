@@ -83,14 +83,23 @@ public class ServiceServiceImpl implements ServiceService {
      * @return
      */
     @Override
-    public Page<ServiceDTO> findAll(Pageable pageable) {
+    public Page<ServiceDTO> findAll(String name,Pageable pageable) {
         logger.info("Listando todos os serviços.");
 
-        Page<Service> addresses = serviceRepository.findAll(pageable);
+        Page<Service> services;
 
-        logger.info("Total de serviços encontrados: {}", addresses.getSize());
+        if (name == null || name.isBlank()) {
+            services = serviceRepository.findAll(pageable);
+        } else {
+            services = serviceRepository.findByNameContainingIgnoreCase(
+                    name,
+                    pageable
+            );
+        }
 
-        return serviceMapper.toDTOList(addresses);
+        logger.info("Total de serviços encontrados: {}", services.getSize());
+
+        return serviceMapper.toDTOList(services);
     }
 
     /**

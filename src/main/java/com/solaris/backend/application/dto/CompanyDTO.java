@@ -16,6 +16,7 @@ public record CompanyDTO(
          String phone,
          String document,
          DocumentType documentType,
+         Boolean active,
          AddressDTO address
 ) {
 }

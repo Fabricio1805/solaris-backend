@@ -57,11 +57,11 @@ public class PaymentController {
 
     @Operation(summary = "Listar todos os pagamentos")
     @GetMapping
-    public ResponseEntity<Page<PaymentDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<PaymentDTO>> findAll(@RequestParam(required = false) String name, Pageable pageable) {
 
         logger.info("Listando todos os pagamentos");
 
-        Page<PaymentDTO> response = paymentService.findAll(pageable);
+        Page<PaymentDTO> response = paymentService.findAll(name,pageable);
         return ResponseEntity.ok(response);
     }
 

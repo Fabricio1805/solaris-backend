@@ -8,7 +8,8 @@ public enum AppointmentStatus {
         COMPLETED("Concluído"),
         CANCELLED("Cancelado"),
         NO_SHOW("Não compareceu"),
-        RESCHEDULED("Reagendado");
+        RESCHEDULED("Reagendado"),
+        PENDING("Pendente");
 
         private final String description;
 

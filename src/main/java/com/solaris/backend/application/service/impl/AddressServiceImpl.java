@@ -83,12 +83,12 @@ public class AddressServiceImpl implements AddressService {
      * @return
      */
     @Override
-    public Page<AddressDTO> findAll(Pageable pageable) {
+    public Page<AddressDTO> findAll(String name, Pageable pageable) {
         logger.info("Listando todos os endereÃ§os.");
 
         Page<Address> addresses = addressRepository.findAll(pageable);
 
-        logger.info("Total de endereços encontrados: {}", addresses.getSize());
+        logger.info("Total de endereï¿½os encontrados: {}", addresses.getSize());
 
         return addressMapper.toDTOList(addresses);
     }

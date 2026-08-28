@@ -57,11 +57,11 @@ public class WorkingHoursController {
 
     @Operation(summary = "Listar todos os horas de trabalho")
     @GetMapping
-    public ResponseEntity<Page<WorkingHoursDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<WorkingHoursDTO>> findAll(@RequestParam(required = false) String name, Pageable pageable) {
 
         logger.info("Listando todos os horas de trabalho");
 
-        Page<WorkingHoursDTO> response = workingHoursService.findAll(pageable);
+        Page<WorkingHoursDTO> response = workingHoursService.findAll(name, pageable);
         return ResponseEntity.ok(response);
     }
 

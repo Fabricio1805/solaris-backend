@@ -56,11 +56,11 @@ public class CompanyController {
 
     @Operation(summary = "Listar todos os empresas")
     @GetMapping
-    public ResponseEntity<Page<CompanyDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<CompanyDTO>> findAll(@RequestParam(required = false) String name, Pageable pageable) {
 
         logger.info("Listando todos os empresas");
 
-        Page<CompanyDTO> response = companyService.findAll(pageable);
+        Page<CompanyDTO> response = companyService.findAll(name,pageable);
         return ResponseEntity.ok(response);
     }
 

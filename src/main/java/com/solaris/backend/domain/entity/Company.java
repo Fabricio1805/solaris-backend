@@ -18,6 +18,7 @@ public class Company extends  BaseEntity {
     private String email;
     private String phone;
     private String document;
+    private Boolean active;
 
     @Enumerated(EnumType.STRING)
     private DocumentType documentType;

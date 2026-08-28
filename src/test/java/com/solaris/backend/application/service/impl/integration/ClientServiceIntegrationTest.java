@@ -111,7 +111,7 @@ class ClientServiceIntegrationTest {
 
         addressService.save(dto);
 
-        assertTrue(addressService.findAll(pageable).getSize() >= 2);
+        assertTrue(addressService.findAll("",pageable).getSize() >= 2);
     }
 
     @Test

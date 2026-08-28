@@ -56,11 +56,11 @@ public class ServiceController {
 
     @Operation(summary = "Listar todos os serviços")
     @GetMapping
-    public ResponseEntity<Page<ServiceDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<ServiceDTO>> findAll(@RequestParam(required = false) String name, Pageable pageable) {
 
         logger.info("Listando todos os serviços");
 
-        Page<ServiceDTO> response = serviceService.findAll(pageable);
+        Page<ServiceDTO> response = serviceService.findAll(name,pageable);
         return ResponseEntity.ok(response);
     }
 

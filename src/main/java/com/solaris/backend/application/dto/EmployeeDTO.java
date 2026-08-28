@@ -12,5 +12,7 @@ public record EmployeeDTO(
         SpecialtyDTO specialty,
         AddressDTO address,
         Boolean active,
-        String colorCalendar) {
+        String colorCalendar,
+        String name
+) {
 }

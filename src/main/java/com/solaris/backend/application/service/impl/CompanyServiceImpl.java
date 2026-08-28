@@ -73,10 +73,19 @@ public class CompanyServiceImpl implements CompanyService {
      * @return
      */
     @Override
-    public Page<CompanyDTO> findAll(Pageable pageable) {
+    public Page<CompanyDTO> findAll(String name,Pageable pageable) {
         logger.info("Listando todos os Empresas.");
 
-        Page<Company> companies = companyRepository.findAll(pageable);
+        Page<Company> companies;
+
+        if (name == null || name.isBlank()) {
+            companies = companyRepository.findAll(pageable);
+        } else {
+            companies = companyRepository.findByNameContainingIgnoreCase(
+                    name,
+                    pageable
+            );
+        }
 
         logger.info("Total de Empresas encontrados: {}", companies.getSize());
 

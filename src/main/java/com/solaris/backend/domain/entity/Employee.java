@@ -15,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Employee extends BaseEntity {
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "company_id")

@@ -84,14 +84,14 @@ public class WorkingHoursServiceImpl implements WorkingHoursService {
      * @return
      */
     @Override
-    public Page<WorkingHoursDTO> findAll(Pageable pageable) {
+    public Page<WorkingHoursDTO> findAll(String name,Pageable pageable) {
         logger.info("Listando todos os horas de trabalho.");
 
-        Page<WorkingHours> addresses = workingHoursRepository.findAll(pageable);
+        Page<WorkingHours> workingHours = workingHoursRepository.findAll(pageable);
 
-        logger.info("Total de horas de trabalho encontrados: {}", addresses.getSize());
+        logger.info("Total de horas de trabalho encontrados: {}", workingHours.getSize());
 
-        return workingHoursMapper.toDTOList(addresses);
+        return workingHoursMapper.toDTOList(workingHours);
     }
 
     /**

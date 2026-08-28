@@ -57,11 +57,11 @@ public class AppointmentController {
 
     @Operation(summary = "Listar todos os agendamentos")
     @GetMapping
-    public ResponseEntity<Page<AppointmentDTO>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<AppointmentDTO>> findAll(@RequestParam(required = false) String name, Pageable pageable) {
 
         logger.info("Listando todos os agendamentos");
 
-        Page<AppointmentDTO> response = appointmentService.findAll(pageable);
+        Page<AppointmentDTO> response = appointmentService.findAll(name, pageable);
         return ResponseEntity.ok(response);
     }
 
